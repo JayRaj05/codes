@@ -1,0 +1,26 @@
+CREATE TABLE Orders (
+    order_id INT PRIMARY KEY,
+    customer_id INT(10),
+    order_date DATE,
+    total_amount DECIMAL(10, 2),
+    status VARCHAR(20)
+);
+
+CREATE TRIGGER update_order_date
+AFTER INSERT ON Orders
+FOR EACH ROW
+BEGIN
+    UPDATE Orders SET order_date = NOW() WHERE order_id = NEW.order_id;
+END;
+
+CREATE TRIGGER apply_discount
+AFTER UPDATE ON Orders
+FOR EACH ROW 
+BEGIN
+    UPDATE Orders SET total_amount = NEW.total_amount * 0.9;
+END;
+
+INSERT INTO Orders (order_id, customer_id, order_date, total_amount) VALUES (1, 1001, NULL, 100);
+UPDATE Orders SET total_amount = 90 WHERE order_id = 1;
+
+

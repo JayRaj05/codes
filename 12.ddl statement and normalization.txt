@@ -1,0 +1,27 @@
+CREATE TABLE Authors (
+  author_id INT PRIMARY KEY,
+  author_name VARCHAR(50)
+);
+
+CREATE TABLE Books (
+  book_id INT PRIMARY KEY,
+  book_title VARCHAR(100),
+  publication_year INT,
+  author_id INT,
+  FOREIGN KEY (author_id) REFERENCES Authors(author_id)
+);
+
+CREATE TABLE Members (
+  member_id INT PRIMARY KEY,
+  member_name VARCHAR(50),
+  member_address VARCHAR(100)
+);
+
+CREATE TABLE Transactions (
+  transaction_id INT PRIMARY KEY,
+  book_id INT,
+  member_id INT,
+  transaction_date DATE,
+  FOREIGN KEY (book_id) REFERENCES Books(book_id),
+  FOREIGN KEY (member_id) REFERENCES Members(member_id)
+);
